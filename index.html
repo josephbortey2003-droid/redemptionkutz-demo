@@ -9,15 +9,15 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700&display=swap">
 <style>
-/* Layout: their shop, made into a page: black walls, golden fern wallpaper, red chairs, orange logo. Photo hero framed by the wallpaper, the chair gallery, services, reviews, visit. Single dark look by choice. */
+/* Layout: split screen. A sticky gold-on-black side panel (logo, status, actions, hours) beside a scrolling feed of their cuts with cards woven in. Their shop: black walls, golden fern wallpaper, red chairs, orange script logo. */
 :root {
   --bg: #0c0c0d;
-  --panel: #161618;
+  --panel: #151517;
   --ink: #f5f2ea;
   --soft: #aaa69c;
   --line: #2b2b2e;
   --gold: #e3c21a;
-  --orange: #d9741f;
+  --gold-deep: #b8930a;
   --red: #d8262f;
   --head: "Bebas Neue", "Arial Narrow", Impact, sans-serif;
   --text: "Barlow", "Segoe UI", system-ui, sans-serif;
@@ -28,101 +28,78 @@ body { background: var(--bg); color: var(--ink); font: 400 17px/1.55 var(--text)
 img { display: block; max-width: 100%; }
 a { color: inherit; }
 :focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; border-radius: 4px; }
-.wrap { max-width: 1160px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.demo { background: var(--gold); color: #111; font-size: 13px; font-weight: 600; text-align: center; padding: 8px 16px; }
 
-.demo { background: var(--gold); color: #111; font-size: 13px; font-weight: 600; text-align: center; padding-block: 8px; }
+.split { display: grid; grid-template-columns: minmax(320px, 420px) 1fr; min-height: 100vh; }
 
-header.top { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 14px; }
-.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-.brand img { width: 64px; height: 64px; }
-.brand b { font: 400 28px/1 var(--head); letter-spacing: .04em; }
-.brand b span { color: var(--gold); }
-.top nav { display: flex; gap: 24px; font-weight: 600; font-size: 15px; }
-.top nav a { text-decoration: none; }
-.top nav a:hover { color: var(--gold); }
-
-.hero { display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: center; padding-block: 28px 72px; }
-.kicker { color: var(--gold); font-weight: 700; letter-spacing: .16em; text-transform: uppercase; font-size: 13px; margin: 0 0 12px; }
-.hero h1 { font: 400 clamp(68px, 11vw, 150px)/.86 var(--head); margin: 0; letter-spacing: .01em; }
-.hero h1 em { font-style: normal; color: var(--gold); }
-.lede { font-size: 20px; color: var(--soft); max-width: 36ch; margin: 22px 0 28px; }
-.ctas { display: flex; gap: 12px; flex-wrap: wrap; }
-.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 22px; border-radius: 999px; font-weight: 700; text-decoration: none; border: 2px solid var(--ink); }
-.btn.gold { background: var(--gold); border-color: var(--gold); color: #111; }
-.btn.gold:hover { background: #f1d23a; border-color: #f1d23a; }
-.btn.ghost:hover { border-color: var(--gold); color: var(--gold); }
-
-.hero > div:last-child { max-width: 440px; width: 100%; justify-self: end; }
-.frame { position: relative; padding: 16px; border-radius: 30px; background: linear-gradient(145deg, #f0cf2a, #b8930a); }
-.frame img { position: relative; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: 60% 50%; border-radius: 18px; }
-.board { margin-top: 14px; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 14px 18px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 18px; }
+/* Side panel */
+.side { position: sticky; top: 0; height: 100vh; overflow-y: auto; padding: 34px clamp(22px, 3vw, 40px); background: linear-gradient(160deg, #18160c 0%, #0c0c0d 55%); border-right: 1px solid var(--line); display: flex; flex-direction: column; gap: 16px; scrollbar-width: none; }
+.side::-webkit-scrollbar { display: none; }
+.side::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 6px; background: linear-gradient(var(--gold), var(--gold-deep)); }
+.logo { width: 80px; height: 80px; }
+.side h1 { font: 400 clamp(50px, 4.4vw, 68px)/.88 var(--head); margin: 0; letter-spacing: .01em; }
+.side h1 span { color: var(--gold); display: block; }
+.side .tag { color: var(--soft); margin: 0; font-size: 18px; }
 .status { display: flex; align-items: center; gap: 10px; font: 400 26px/1 var(--head); letter-spacing: .03em; }
 .dot { width: 12px; height: 12px; border-radius: 50%; background: #888; }
 .status.open .dot { background: #1fae5f; box-shadow: 0 0 0 5px rgba(31,174,95,.22); }
 .status.closed .dot { background: var(--red); }
-.board span { font-size: 15px; color: var(--soft); align-self: center; }
-.stars { color: var(--gold); }
-
-
-section { padding-block: 76px; }
-.eyebrow { font-size: 13px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); margin: 0 0 8px; }
-h2 { font: 400 clamp(48px, 7vw, 92px)/.9 var(--head); margin: 0 0 30px; letter-spacing: .01em; }
-.head { display: flex; justify-content: space-between; align-items: end; gap: 20px; flex-wrap: wrap; }
-.head p { color: var(--soft); max-width: 40ch; margin: 0 0 30px; }
-
-.chair { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: 220px; grid-auto-flow: dense; gap: 12px; }
-.chair figure { margin: 0; position: relative; overflow: hidden; border-radius: 14px; background: var(--panel); }
-.chair figure.tall { grid-row: span 2; }
-.chair figure.wide { grid-column: span 2; }
-.chair img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
-.chair figure:hover img { transform: scale(1.04); }
-.chair figcaption { position: absolute; left: 10px; bottom: 10px; background: rgba(12,12,13,.8); color: var(--ink); font-size: 13px; font-weight: 600; padding: 5px 11px; border-radius: 999px; }
-
-.menu { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 48px; }
-.item { display: grid; grid-template-columns: 1fr auto; gap: 4px 16px; padding-block: 18px; border-bottom: 1px solid var(--line); }
-.item h3 { margin: 0; font-size: 21px; font-weight: 700; }
-.item .price { font: 400 26px/1 var(--head); color: var(--soft); white-space: nowrap; }
-.item p { grid-column: 1 / -1; margin: 0; color: var(--soft); font-size: 15px; }
-.note { color: var(--soft); font-size: 14px; margin-top: 18px; }
-
-.ladies { display: grid; grid-template-columns: .8fr 1.2fr; gap: 44px; align-items: center; }
-.ladies img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 25%; border-radius: 24px; }
-.ladies blockquote { margin: 22px 0 0; padding-left: 18px; border-left: 4px solid var(--gold); font-size: 20px; font-weight: 500; }
-.ladies cite { display: block; font-style: normal; color: var(--soft); font-size: 14px; margin-top: 8px; }
-
-.quotes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
-.quotes blockquote { margin: 0; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 22px; display: flex; flex-direction: column; justify-content: space-between; gap: 14px; }
-.quotes p { margin: 0; font-size: 19px; font-weight: 500; }
-.quotes cite { font-style: normal; color: var(--soft); font-size: 14px; }
-.rating { display: flex; align-items: baseline; gap: 14px; margin-bottom: 26px; }
-.rating b { font: 400 76px/1 var(--head); color: var(--gold); }
-.rating span { color: var(--soft); }
-
-.visit { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; }
-.addr { font-size: 21px; font-weight: 600; margin: 0 0 6px; }
-.hours { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
-.hours td { padding: 11px 0; border-bottom: 1px solid var(--line); }
+.btns { display: grid; gap: 10px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 20px; border-radius: 12px; font-weight: 700; text-decoration: none; border: 2px solid var(--ink); }
+.btn.gold { background: var(--gold); border-color: var(--gold); color: #111; }
+.btn.gold:hover { background: #f1d23a; border-color: #f1d23a; }
+.btn.ghost:hover { border-color: var(--gold); color: var(--gold); }
+.hours { width: 100%; border-collapse: collapse; font-size: 15px; font-variant-numeric: tabular-nums; }
+.hours td { padding: 4px 0; border-bottom: 1px dashed var(--line); color: var(--soft); }
 .hours td:last-child { text-align: right; }
-.hours tr.today td { font-weight: 700; color: var(--gold); }
+.hours tr.today td { color: var(--gold); font-weight: 700; }
+.where { font-size: 15px; color: var(--soft); margin: 0; }
+.where b { color: var(--ink); }
+.side .rate { font-size: 15px; color: var(--soft); }
+.side .rate b { color: var(--gold); font: 400 26px/1 var(--head); margin-right: 6px; }
 
-footer { padding-block: 32px 110px; color: var(--soft); font-size: 14px; border-top: 1px solid var(--line); }
-footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+/* Feed */
+.feed { padding: 34px clamp(16px, 4vw, 56px) 120px; display: grid; gap: 26px; max-width: 900px; width: 100%; justify-self: center; }
+.feed-head { display: flex; justify-content: space-between; align-items: end; gap: 12px; flex-wrap: wrap; }
+.feed-head h2 { font: 400 clamp(44px, 5vw, 72px)/.9 var(--head); margin: 0; }
+.feed-head a { color: var(--gold); font-weight: 600; text-decoration: none; }
+.post { margin: 0; background: var(--panel); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; }
+.post img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+.post.wide img { aspect-ratio: 16 / 10; }
+.post figcaption { padding: 14px 18px; display: flex; justify-content: space-between; gap: 12px; align-items: center; }
+.post figcaption b { font: 400 26px/1 var(--head); letter-spacing: .03em; }
+.post figcaption span { color: var(--soft); font-size: 14px; }
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; }
+
+.card { border-radius: 18px; padding: clamp(22px, 4vw, 36px); }
+.card.gold { background: var(--gold); color: #111; }
+.card.gold h3 { font: 400 clamp(38px, 4.4vw, 56px)/.92 var(--head); margin: 0 0 16px; }
+.svc { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0 24px; }
+.svc li { display: flex; justify-content: space-between; gap: 10px; padding: 10px 0; border-bottom: 1.5px solid rgba(17,17,17,.2); font-weight: 600; }
+.svc li span:last-child { font: 400 22px/1 var(--head); }
+.card.gold small { display: block; margin-top: 12px; font-size: 13px; opacity: .75; }
+
+.card.quote { background: var(--panel); border: 1px solid var(--line); }
+.card.quote p { font: 400 clamp(30px, 3.6vw, 46px)/1.02 var(--head); margin: 0 0 12px; letter-spacing: .01em; }
+.card.quote p em { font-style: normal; color: var(--gold); }
+.card.quote cite { font-style: normal; color: var(--soft); }
+
+.revs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.revs blockquote { margin: 0; background: var(--panel); border: 1px solid var(--line); border-top: 4px solid var(--gold); border-radius: 14px; padding: 18px; font-size: 16px; }
+.revs cite { display: block; margin-top: 10px; font-style: normal; color: var(--soft); font-size: 13px; }
 
 .dock { position: fixed; left: 0; right: 0; bottom: 0; display: none; gap: 10px; padding: 10px max(16px, env(safe-area-inset-right, 0px)) calc(10px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); background: rgba(12,12,13,.93); backdrop-filter: blur(8px); border-top: 1px solid var(--line); z-index: 5; }
 .dock .btn { flex: 1; padding: 12px; }
 
 @media (max-width: 900px) {
-  .hero, .visit, .ladies { grid-template-columns: 1fr; }
-  .menu, .quotes { grid-template-columns: 1fr; }
-  .chair { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 180px; }
-  .top nav { display: none; }
-  .brand img { width: 52px; height: 52px; }
+  .split { grid-template-columns: 1fr; }
+  .side { position: relative; height: auto; overflow: visible; border-right: 0; border-bottom: 1px solid var(--line); padding-left: max(22px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  .side::before { inset: 0 0 auto 0; width: auto; height: 6px; }
+  .logo { width: 72px; height: 72px; }
+  .feed { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  .pair, .revs, .svc { grid-template-columns: 1fr; }
   .dock { display: flex; }
-  section { padding-block: 54px; }
-  .frame { padding: 12px; }
-  .hero > div:last-child { max-width: none; justify-self: stretch; }
 }
-@media (prefers-reduced-motion: reduce) { .chair img { transition: none; } }
 </style>
 <style>body{margin:0}</style>
 </head>
@@ -130,122 +107,75 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
 
 <div class="demo">Demo website made for Redemption Kutz. Prices are placeholders until you confirm them.</div>
 
-<div class="wrap">
-  <header class="top">
-    <a class="brand" href="#top" id="top" aria-label="Redemption Kutz home">
-      <img src="img/logo.png" alt="" width="200" height="200">
-      <b>Redemption <span>Kutz</span></b>
-    </a>
-    <nav aria-label="Sections">
-      <a href="#work">Our work</a>
-      <a href="#services">Services</a>
-      <a href="#reviews">Reviews</a>
-      <a href="#visit">Visit</a>
-    </nav>
-  </header>
-
-  <div class="hero">
-    <div>
-      <p class="kicker">Barbershop · Omanjor, Accra</p>
-      <h1>The best cuts. <em>All kinds of fades.</em></h1>
-      <p class="lede">Fades, designs, ladies' cuts and kids' cuts. Just walk in and experience greatness.</p>
-      <div class="ctas">
-        <a class="btn gold" href="https://wa.me/233570150897?text=Hi%20Redemption%20Kutz%2C%20I%27d%20like%20a%20cut" target="_blank" rel="noopener">WhatsApp us</a>
-        <a class="btn ghost" href="tel:+233570150897">Call 057 015 0897</a>
-      </div>
+<div class="split">
+  <aside class="side" aria-label="Redemption Kutz">
+    <img class="logo" src="img/logo.png" alt="Redemption Kutz logo" width="200" height="200">
+    <h1>Redemption <span>Kutz</span></h1>
+    <p class="tag">The best haircuts and all kinds of fades. Just walk in and experience greatness.</p>
+    <div class="status" id="status"><span class="dot"></span><span id="statusText">Open today</span></div>
+    <div class="btns">
+      <a class="btn gold" href="https://wa.me/233570150897?text=Hi%20Redemption%20Kutz%2C%20I%27d%20like%20a%20cut" target="_blank" rel="noopener">WhatsApp us</a>
+      <a class="btn ghost" href="tel:+233570150897">Call 057 015 0897</a>
+      <a class="btn ghost" href="https://www.google.com/maps/search/?api=1&query=Redemption%20Kutz%20Accra" target="_blank" rel="noopener">Get directions</a>
     </div>
-    <div>
-      <div class="frame"><img src="img/hero.webp" alt="A client with a fresh fade, laughing with his barber in the shop" width="900" height="1125"></div>
-      <div class="board" aria-label="Opening status">
-        <div class="status" id="status"><span class="dot"></span><span id="statusText">Open today</span></div>
-        <span id="todayLine">Tue–Sun · 7 am – 10 pm</span>
-        <span><span class="stars" aria-hidden="true">★★★★★</span> 5.0 on Google · 29 reviews</span>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<section id="work">
-  <div class="wrap">
-    <div class="head">
-      <div><p class="eyebrow">Fresh from the chair</p><h2>Our work</h2></div>
-      <p>Real cuts from our Instagram. Fades, designs, curls and ladies' cuts.</p>
-    </div>
-    <div class="chair">
-      <figure class="tall"><img src="img/zebra.webp" alt="Sharp line design on a skin fade" loading="lazy" style="object-position:50% 30%"><figcaption>Design</figcaption></figure>
-      <figure><img src="img/bird.webp" alt="Bird design carved into a fade" loading="lazy" style="object-position:50% 35%"><figcaption>Bird design</figcaption></figure>
-      <figure><img src="img/wave.webp" alt="Wave lines carved into the back of a cut" loading="lazy"><figcaption>Wave lines</figcaption></figure>
-      <figure class="tall"><img src="img/twists.webp" alt="Neat twists with a shaped beard" loading="lazy" style="object-position:50% 30%"><figcaption>Twists + beard</figcaption></figure>
-      <figure><img src="img/curls.webp" alt="Curly top with a clean taper" loading="lazy" style="object-position:50% 30%"><figcaption>Curls</figcaption></figure>
-      <figure><img src="img/kid.webp" alt="A boy with a fresh cut and side design" loading="lazy" style="object-position:70% 40%"><figcaption>Kids</figcaption></figure>
-      <figure><img src="img/taper.webp" alt="Clean taper and line-up" loading="lazy" style="object-position:60% 40%"><figcaption>Taper</figcaption></figure>
-      <figure><img src="img/young.webp" alt="Low cut with a sharp line-up" loading="lazy" style="object-position:50% 40%"><figcaption>Line-up</figcaption></figure>
-      <figure class="wide"><img src="img/back.webp" alt="Clean fade with a carved line at the back" loading="lazy" style="object-position:50% 72%"><figcaption>Fade + line</figcaption></figure>
-    </div>
-  </div>
-</section>
-
-<section id="services">
-  <div class="wrap">
-    <p class="eyebrow">Services</p>
-    <h2>What we do</h2>
-    <div class="menu">
-      <div class="item"><h3>Haircut</h3><span class="price">GH₵ —</span><p>Any style, finished with a clean line-up.</p></div>
-      <div class="item"><h3>Fades</h3><span class="price">GH₵ —</span><p>Skin, low, mid or high. All kinds of fades.</p></div>
-      <div class="item"><h3>Hair designs</h3><span class="price">GH₵ —</span><p>Carved lines, waves and patterns.</p></div>
-      <div class="item"><h3>Ladies' cuts</h3><span class="price">GH₵ —</span><p>Short cuts for ladies, done properly.</p></div>
-      <div class="item"><h3>Kids' cut</h3><span class="price">GH₵ —</span><p>Patient, neat cuts for the little ones.</p></div>
-      <div class="item"><h3>Beard &amp; twists</h3><span class="price">GH₵ —</span><p>Beard shaping, line-ups and twists.</p></div>
-    </div>
-    <p class="note">Prices to be filled in by Redemption Kutz.</p>
-  </div>
-</section>
-
-<section>
-  <div class="wrap ladies">
-    <img src="img/lady.webp" alt="A lady with a short low cut" loading="lazy">
-    <div>
-      <p class="eyebrow">Ladies welcome</p>
-      <h2>Ladies' cuts, done right</h2>
-      <p class="lede" style="margin:0">Short cuts and low cuts for ladies, from barbers who know how.</p>
-      <blockquote>"Most barbers don't know how to give females haircuts, but this particular shop is exceptional."<cite>Google review</cite></blockquote>
-    </div>
-  </div>
-</section>
-
-<section id="reviews">
-  <div class="wrap">
-    <p class="eyebrow">From Google reviews</p>
-    <h2>Word on the street</h2>
-    <div class="rating"><b>5.0</b><span>from 29 Google reviews</span></div>
-    <div class="quotes">
-      <blockquote><p>"You walk in, you make a request, and you're served well within the shortest time at the lowest cost."</p><cite>Google review</cite></blockquote>
-      <blockquote><p>"The barber listened to exactly what I wanted and delivered a fantastic haircut."</p><cite>Google review</cite></blockquote>
-      <blockquote><p>"One of the best customer services, coupled with good and experienced barbers."</p><cite>Google review</cite></blockquote>
-    </div>
-  </div>
-</section>
-
-<section id="visit">
-  <div class="wrap visit">
-    <div>
-      <p class="eyebrow">Visit</p>
-      <h2>Omanjor, Accra</h2>
-      <p class="addr">Tsoku Street, Omanjor</p>
-      <p>GhanaPost GPS <b>GC-064-9170</b> · Plus code <b>JPP3+Q7</b></p>
-      <div class="ctas">
-        <a class="btn gold" href="https://www.google.com/maps/search/?api=1&query=Redemption%20Kutz%20Accra" target="_blank" rel="noopener">Get directions</a>
-        <a class="btn ghost" href="https://www.instagram.com/redemption.kutz/" target="_blank" rel="noopener">Instagram</a>
-      </div>
-    </div>
+    <p class="where"><b>Tsoku Street, Omanjor</b><br>GhanaPost GPS GC-064-9170</p>
     <table class="hours" aria-label="Opening hours"><tbody id="hoursBody"></tbody></table>
-  </div>
-</section>
+    <div class="rate"><b>5.0</b>★★★★★ from 29 Google reviews</div>
+  </aside>
 
-<footer>
-  <div class="wrap"><span>© Redemption Kutz · Omanjor, Accra</span><a href="https://www.instagram.com/redemption.kutz/" target="_blank" rel="noopener">@redemption.kutz</a></div>
-</footer>
+  <main class="feed">
+    <div class="feed-head">
+      <h2>Fresh from the chair</h2>
+      <a href="https://www.instagram.com/redemption.kutz/" target="_blank" rel="noopener">@redemption.kutz →</a>
+    </div>
+
+    <figure class="post wide"><img src="img/hero.webp" alt="A client with a fresh fade, laughing with his barber in the shop" style="object-position:60% 45%"><figcaption><b>Inside the shop</b><span>The golden walls you'll know us by</span></figcaption></figure>
+
+    <div class="pair">
+      <figure class="post"><img src="img/bird.webp" alt="Bird design carved into a fade" loading="lazy" style="object-position:50% 35%"><figcaption><b>Bird design</b><span>Freehand</span></figcaption></figure>
+      <figure class="post"><img src="img/zebra.webp" alt="Sharp line design on a skin fade" loading="lazy" style="object-position:50% 30%"><figcaption><b>Lines</b><span>Skin fade</span></figcaption></figure>
+    </div>
+
+    <div class="card gold" id="services">
+      <h3>What we do</h3>
+      <ul class="svc">
+        <li><span>Haircut</span><span>GH₵ —</span></li>
+        <li><span>Fades (skin to high)</span><span>GH₵ —</span></li>
+        <li><span>Hair designs</span><span>GH₵ —</span></li>
+        <li><span>Ladies' cuts</span><span>GH₵ —</span></li>
+        <li><span>Kids' cut</span><span>GH₵ —</span></li>
+        <li><span>Beard &amp; twists</span><span>GH₵ —</span></li>
+      </ul>
+      <small>Prices to be filled in by Redemption Kutz.</small>
+    </div>
+
+    <div class="pair">
+      <figure class="post"><img src="img/lady.webp" alt="A lady with a short low cut" loading="lazy" style="object-position:50% 25%"><figcaption><b>Ladies' cut</b><span>Done properly</span></figcaption></figure>
+      <div class="card quote" style="display:flex;flex-direction:column;justify-content:center">
+        <p>"Most barbers don't know how to give <em>females haircuts</em>, but this shop is exceptional."</p>
+        <cite>Google review</cite>
+      </div>
+    </div>
+
+    <figure class="post wide"><img src="img/back.webp" alt="Clean fade with a carved line at the back" loading="lazy" style="object-position:50% 72%"><figcaption><b>Fade + line</b><span>Clean from every angle</span></figcaption></figure>
+
+    <div class="pair">
+      <figure class="post"><img src="img/twists.webp" alt="Neat twists with a shaped beard" loading="lazy" style="object-position:50% 30%"><figcaption><b>Twists + beard</b><span>Full look</span></figcaption></figure>
+      <figure class="post"><img src="img/kid.webp" alt="A boy with a fresh cut and side design" loading="lazy" style="object-position:70% 40%"><figcaption><b>Kids</b><span>With a design</span></figcaption></figure>
+    </div>
+
+    <div class="revs">
+      <blockquote>"You walk in, you make a request, and you're served well within the shortest time at the lowest cost."<cite>Google review</cite></blockquote>
+      <blockquote>"The barber listened to exactly what I wanted and delivered a fantastic haircut."<cite>Google review</cite></blockquote>
+      <blockquote>"One of the best customer services, coupled with good and experienced barbers."<cite>Google review</cite></blockquote>
+    </div>
+
+    <div class="pair">
+      <figure class="post"><img src="img/wave.webp" alt="Wave lines carved into the back of a cut" loading="lazy"><figcaption><b>Wave lines</b><span>Design</span></figcaption></figure>
+      <figure class="post"><img src="img/curls.webp" alt="Curly top with a clean taper" loading="lazy" style="object-position:50% 30%"><figcaption><b>Curls</b><span>Taper</span></figcaption></figure>
+    </div>
+  </main>
+</div>
 
 <div class="dock">
   <a class="btn gold" href="https://wa.me/233570150897?text=Hi%20Redemption%20Kutz%2C%20I%27d%20like%20a%20cut" target="_blank" rel="noopener">WhatsApp</a>
@@ -254,27 +184,21 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
 
 <script>
 (() => {
-  // Accra is on UTC all year. Hours from Google Maps: Tue–Sun 7 am – 10 pm (Thu from 7:30), Monday closed.
+  // Accra is on UTC. Hours from Google Maps: Tue–Sun 7 am – 10 pm (Thu from 7:30), Monday closed.
   const H = { 0: [420, 1320], 1: null, 2: [420, 1320], 3: [420, 1320], 4: [450, 1320], 5: [420, 1320], 6: [420, 1320] };
-  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
   const t = mm => { const hr = Math.floor(mm / 60), mi = mm % 60; return (hr > 12 ? hr - 12 : hr) + (mi ? ':' + String(mi).padStart(2, '0') : '') + (hr >= 12 ? ' pm' : ' am'); };
   const text = d => H[d] === null ? 'Closed' : t(H[d][0]) + ' – ' + t(H[d][1]);
   const now = new Date(), d = now.getUTCDay(), m = now.getUTCHours() * 60 + now.getUTCMinutes(), h = H[d];
   const open = !!h && m >= h[0] && m < h[1];
   document.getElementById('status').classList.add(open ? 'open' : 'closed');
   let s;
-  if (open) s = 'Open now';
+  if (open) s = 'Open now · till 10 pm';
   else if (h && m < h[0]) s = 'Opens ' + t(h[0]);
-  else { let n = (d + 1) % 7; while (H[n] === null) n = (n + 1) % 7; s = 'Closed · opens ' + (n === (d + 1) % 7 ? '' : days[n].slice(0, 3) + ' ') + t(H[n][0]); }
+  else { let n = (d + 1) % 7; while (H[n] === null) n = (n + 1) % 7; s = 'Closed · opens ' + (n === (d + 1) % 7 ? '' : days[n] + ' ') + t(H[n][0]); }
   document.getElementById('statusText').textContent = s;
-  document.getElementById('todayLine').textContent = 'Today: ' + text(d);
   const body = document.getElementById('hoursBody');
-  for (let i = 1; i <= 7; i++) {
-    const k = i % 7, tr = document.createElement('tr');
-    if (k === d) tr.className = 'today';
-    tr.innerHTML = '<td>' + days[k] + (k === d ? ' (today)' : '') + '</td><td>' + text(k) + '</td>';
-    body.appendChild(tr);
-  }
+  for (let i = 1; i <= 7; i++) { const k = i % 7, tr = document.createElement('tr'); if (k === d) tr.className = 'today'; tr.innerHTML = '<td>' + days[k] + '</td><td>' + text(k) + '</td>'; body.appendChild(tr); }
 })();
 </script>
 
